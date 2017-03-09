@@ -21,6 +21,7 @@
     @endif
     <form action="{{ route('institutos-editado') }}" method="post" class="form-horizontal">
         {{csrf_field()}}
+        <input type="hidden" name="id" value="{{ $instituto->id }}">
         <div class="panel panel-flat">
             <div class="panel-heading">
                 <h5 class="panel-title">Modificar Instituto<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
@@ -78,7 +79,7 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Operación:</label>
                     <div class="col-lg-9">
-                        <input type="text" name="o" value="{{ $instituto->operacion }}" class="form-control" placeholder="">
+                        <input type="text" name="operacion" value="{{ $instituto->operacion }}" class="form-control" placeholder="">
                     </div>
                 </div>
 
@@ -96,11 +97,11 @@
                     </div>
                 </div>
 
-                @if(Auth::user()->nivel == 'director')
+                @if(Auth::user()->nivel == 'director' && $instituto->final == 'N')
                 <div class="form-group">
                     <label class="col-lg-3 control-label"><strong>Finalizado?</strong></label>
                     <div class="col-lg-9">
-                        <select class="form-control">
+                        <select name="final" class="form-control">
                             <option value="S" @if($instituto->final == 'S') selected @endif>SI</option>
                             <option value="N" @if($instituto->final == 'N') selected @endif>NO</option>
                         </select>

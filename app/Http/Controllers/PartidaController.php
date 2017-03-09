@@ -41,6 +41,7 @@ class PartidaController extends Controller
         ]);
 
         $id_inst= Auth()->user()->id_instituto;
+        $instituto = Inst::find($id_inst);
         $clasificador = ClasificadorGnralInstituto::where('id_clasificadorGnral',$request->clasificador)->Where('id_instituto',$id_inst)->first();
 
         if($clasificador){
@@ -55,6 +56,11 @@ class PartidaController extends Controller
         $clasifGnralInst->monto_original = $this->_convertir($request->monto_original);
         $clasifGnralInst->ano_presupuesto = date('Y-m-d');
         $clasifGnralInst->fecha_creacion = date('Y-m-d');
+
+        if($instituto->final == 'S') {
+            $clasifGnralInst->partida_alterna = 'S';
+        }
+
         $clasifGnralInst->id_tipoGasto = $request->tipo_gasto;
         $clasifGnralInst->id_origenFondos = $request->origen_fondos;
 
@@ -62,9 +68,6 @@ class PartidaController extends Controller
             flash('Partida creada exitosamente','success');
             return redirect()->route('partidas-nueva');
         }
-
-        flash('Se ha producido un error inesperado, contacte al Dpto. de Informatica','danger');
-        return redirect()->route('partidas-nueva');
     }
 
     public function verTodas(){
@@ -98,7 +101,7 @@ class PartidaController extends Controller
         $partida->delete();
 
         flash('Partida eliminada exitosamente','success');
-        return redirect()->route('partidas-ver');
+        return redirect()->route('partidas-verTodas');
     }
 
     public function editar($id){

@@ -9,48 +9,35 @@
 @endsection
 
 @section('contenido')
-
-    <div class="col-lg-12">
-
-    @include('flash::message')
-
-    <div class="panel panel-flat">
+    <div class="col-lg-6">
+        @include('flash::message')
+        <div class="panel panel-flat">
         <div class="panel-heading">
-            <h5 class="panel-title">Clasificador General</h5>
+            <h5 class="panel-title">Catalogo de Modificaciones</h5>
         </div>
 
         <table class="table datatable-scroll-y" width="100%">
             <thead>
                 <tr>
-                    <th>Partida</th>
-                    <th>Denominación</th>
-
-                    @if(Auth::user()->tipo == 'administrador')
-                        <th class="text-center">Acciones</th>
-                    @endif
-
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th class="text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-
-            @foreach($clasifGnral as $cg)
+            @foreach($modificaciones as $m)
             <tr>
-                <td>{{ $cg->partida }}</td>
-                <td>{{ $cg->denominacion }}</td>
-
-                @if(Auth::user()->tipo == 'administrador')
-                    <td class="text-center">
+                <td>{{ $m->nombre }}</td>
+                <td>{{ strtoupper($m->tipo) }}</td>
+                <td class="text-center">
                     <ul class="icons-list">
-                        <li class="text-primary-600"><a href="{{ route('clasifGnral-editar',$cg->id) }}"><i class="icon-pencil7"></i></a></li>
-                        <li class="text-danger-600"><a class="eliminar" id="{{ $cg->id }}"><i class="icon-trash"></i></a></li>
+                        <li class="text-primary-600"><a href="{{ route('catalogoModif-editar',$m->id) }}"><i class="icon-pencil7"></i></a></li>
+                        <li class="text-danger-600"><a class="eliminar" id="{{ $m->id }}"><i class="icon-trash"></i></a></li>
                         {{--<li class="text-teal-600"><a href="#"><i class="icon-cog7"></i></a></li>--}}
                     </ul>
                 </td>
-                @endif
-
             </tr>
             @endforeach
-
             </tbody>
         </table>
     </div>
@@ -63,7 +50,7 @@
        id = $(this).attr('id');
         //alert(id)
         bootbox.confirm({
-            message:"Esta seguro de eleminar este Elemento?",
+            message:"Esta seguro de eleminar esta Modificación?",
             buttons:{
                 confirm: {
                     label: 'Si',

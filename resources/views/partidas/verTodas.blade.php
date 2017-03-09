@@ -21,7 +21,7 @@
                 <th>Clasificador</th>
                 <th>Monto Original</th>
                 <th>Fecha de Creación</th>
-                <th>Partida Alterna</th>
+                <th>Partida Post-Cierre</th>
                 <th>Tipo de Gasto</th>
                 <th>Origen de Fondos</th>
                 <th class="text-center">Actions</th>

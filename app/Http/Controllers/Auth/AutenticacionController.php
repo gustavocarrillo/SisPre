@@ -12,6 +12,7 @@ use App\Instituto as Inst;
 
 class AutenticacionController extends Controller
 {
+
     public function nuevo(){
         $institutos = Inst::all();
         return view('auth.registro')->with('institutos',$institutos);

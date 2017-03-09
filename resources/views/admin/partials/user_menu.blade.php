@@ -7,13 +7,13 @@
         </div>
 
         <div class="sidebar-user-material-menu">
-            <a href="#user-nav" data-toggle="collapse"><span>My account</span> <i class="caret"></i></a>
+            <a href="#user-nav" data-toggle="collapse"><span>Mi Cuenta</span> <i class="caret"></i></a>
         </div>
     </div>
 
     <div class="navigation-wrapper collapse" id="user-nav">
         <ul class="navigation">
-            <li><a href="#"><i class="icon-comment-discussion"></i> <span><span class="badge bg-teal-400 pull-right">58</span> Messages</span></a></li>
+            {{--<li><a href="#"><i class="icon-comment-discussion"></i> <span><span class="badge bg-teal-400 pull-right">58</span> Messages</span></a></li>--}}
             <li class="divider"></li>
             <li><a href="#"><i class="icon-cog5"></i> <span>Configurar cuenta</span></a></li>
             <li><a href="{{ route('user-logout') }}"><i class="icon-switch2"></i> <span>Salir</span></a></li>

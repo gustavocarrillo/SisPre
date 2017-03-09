@@ -33,6 +33,7 @@
                 <td>{{ $inst->responsable }}</td>
                 <td class="text-center">
                     <ul class="icons-list">
+                        <li class="text-green-600"><a href="{{ route('institutos-ver',$inst->id) }}"><i class="icon-file-eye2"></i></a></li>
                         <li class="text-primary-600"><a href="{{ route('institutos-editar',$inst->id) }}"><i class="icon-pencil7"></i></a></li>
                         <li class="text-danger-600"><a class="eliminar" id="{{ $inst->id }}"><i class="icon-trash"></i></a></li>
                         {{--<li class="text-teal-600"><a href="#"><i class="icon-cog7"></i></a></li>--}}
