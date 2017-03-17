@@ -2,59 +2,52 @@
 
 @section('js')
     <script type="text/javascript" src="{{ asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/plugins/tables/datatables/extensions/fixed_columns.min.js') }}"></script>
-
     {{--<script type="text/javascript" src="{{ asset('assets/js/core/app.js') }}"></script>--}}
     <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_basic.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/plugins/notifications/bootbox.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/plugins/notifications/sweet_alert.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_extension_fixed_columns.js') }}"></script>
-
 @endsection
 
 @section('contenido')
-
-    @include('flash::message')
-
-    <div class="panel panel-flat">
+    <div class="col-lg-9">
+        @include('flash::message')
+        <div class="panel panel-flat">
         <div class="panel-heading">
-            <h5 class="panel-title">Partidas del instituto <strong>{{ $inst->nombre }}</strong></h5>
+            <h5 class="panel-title">Compromisos <strong>{{ \App\MisHelpers\MisHelpers::_Instituto() }}</strong></h5>
         </div>
 
-        <table class="table datatable-fixed-both" width="100%">
+        <table class="table datatable-scroll-y" width="100%">
             <thead>
-            <tr>
-                <th>Clasificador</th>
-                <th>Monto Original</th>
-                <th>Denominación</th>
-                <th>Partida Post-Cierre</th>
-                <th>Tipo de Gasto</th>
-                <th>Origen de Fondos</th>
-                <th class="text-center">Actions</th>
-            </tr>
+                <tr>
+                    <th>Numero</th>
+                    <th>Tipo</th>
+                    <th>Monto</th>
+                    <th>Fecha</th>
+                    <th>Partida</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
             </thead>
             <tbody>
-
-            @foreach($partidas as $p)
-            <tr>
-                <td>{{ $p->partida }}</td>
-                <td>{{ \App\MisHelpers\MisHelpers::_Moneda($p->monto_original )}}</td>
-                <td>{{ strtoupper($p->denominacion)}}</td>
-                <td>@if($p->partida_alterna == 'n') NO @else SI @endif</td>
-                <td>{{ $p->tipo_gasto }}</td>
-                <td>{{ $p->nombre }}</td>
+            @foreach($compromisos as $cp)
+            <tr @if($cp->anulada == 's') style="color: red; font-weight: 500" @endif>
+                <td>{{ $cp->numero }}</td>
+                <td>{{ strtoupper($cp->tipo) }}</td>
+                <td>{{ strtoupper($cp->monto) }}</td>
+                <td>{{ strtoupper(date('d-m-Y',strtotime($cp->fecha))) }}</td>
+                <td>{{ $cp->partida}}</td>
                 <td class="text-center">
                     <ul class="icons-list">
-                        <li class="text-primary-600"><a href="{{ route('partidas-editar',$p->id) }}"><i class="icon-pencil7"></i></a></li>
-                        <li class="text-danger-600"><a class="eliminar" id="{{ $p->id }}"><i class="icon-trash"></i></a></li>
+                        <li class="text-green-600"><a href="{{ route('compromisos-ver',$cp->id) }}"><i class="icon-file-eye2"></i></a></li>
+                        <li class="text-primary-600"><a href="{{ route('compromisos-editar',$cp->id) }}"><i class="icon-pencil7"></i></a></li>
+                        <li class="text-danger-600"><a class="eliminar" id="{{ $cp->id }}"><i class="icon-trash"></i></a></li>
                         {{--<li class="text-teal-600"><a href="#"><i class="icon-cog7"></i></a></li>--}}
                     </ul>
                 </td>
             </tr>
             @endforeach
-
             </tbody>
         </table>
+    </div>
     </div>
 @endsection
 
@@ -64,7 +57,7 @@
        id = $(this).attr('id');
         //alert(id)
         bootbox.confirm({
-            message:"Esta seguro de eleminar esta Partida?",
+            message:"Esta seguro de eleminar este Instituto?",
             buttons:{
                 confirm: {
                     label: 'Si',

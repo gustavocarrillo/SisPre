@@ -84,7 +84,7 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Estatus:</label>
                     <div class="col-lg-9">
-                        <select  class="form-control" name="estatus">
+                        <select class="form-control" name="estatus">
                             <option value="activo" selected>ACTIVO</option>
                             <option value="inactivo">INACTIVO</option>
                         </select>
@@ -93,7 +93,7 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Instituto:</label>
                     <div class="col-lg-9">
-                        <select  class="form-control" name="estatus">
+                        <select  class="form-control" name="instituto">
                             @foreach($institutos as $inst)
                                 <option value="{{ $inst->id }}">{{ $inst->nombre }}</option>
                             @endforeach

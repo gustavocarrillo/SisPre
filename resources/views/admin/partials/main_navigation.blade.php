@@ -46,12 +46,23 @@
                     <li><a href="{{ route('tipoGasto-verTodos') }}">Ver Tipos de Gastos</a></li>
                 </ul>
             </li>
+
             @if(Auth::user()->tipo == 'administrador')
                 <li>
                     <a href="#"><i class="icon-pencil6"></i><span>Catalogo de Modificaciones</span></a>
                     <ul>
                         <li><a href="{{ route('catalogoModif-nuevo') }}">Nueva Modificación</a></li>
                         <li><a href="{{ route('catalogoModif-verTodas') }}">Ver Modificaciones</a></li>
+                    </ul>
+                </li>
+            @endif
+
+            @if(Auth::user()->tipo == 'instituto')
+                <li>
+                    <a href="#"><i class="icon-file-text"></i><span>Compromisos</span></a>
+                    <ul>
+                        <li><a href="{{ route('compromisos-nuevo') }}">Nuevo Compromiso</a></li>
+                        <li><a href="{{ route('compromisos-verTodos') }}">Ver Compromisos</a></li>
                     </ul>
                 </li>
             @endif

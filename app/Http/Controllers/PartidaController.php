@@ -13,15 +13,21 @@ use App\TipoGasto;
 use App\OrigenFondos;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use App\MisHelpers\MisHelpers;
 
 
 class PartidaController extends Controller
 {
-    public function nueva(){
+    public function nueva()
+    {
         $clsfGnral = ClasifGrnal::all();
+
         $id_instituto = Auth()->user()->id_instituto;
+
         $instituto = Inst::find($id_instituto);
+
         $tGastos = TipoGasto::all();
+
         $oFondos = OrigenFondos::all();
 
         return view('partidas.nueva')
@@ -31,7 +37,8 @@ class PartidaController extends Controller
             ->with('oFondos',$oFondos);
     }
 
-    public function guardada(Request $request){
+    public function guardada(Request $request)
+    {
 
         $this->validate($request,[
             'clasificador' => 'required',
@@ -41,10 +48,12 @@ class PartidaController extends Controller
         ]);
 
         $id_inst= Auth()->user()->id_instituto;
+
         $instituto = Inst::find($id_inst);
+
         $clasificador = ClasificadorGnralInstituto::where('id_clasificadorGnral',$request->clasificador)->Where('id_instituto',$id_inst)->first();
 
-        if($clasificador){
+        if ($clasificador) {
             flash('La partida que intenta crear ya existe','warning');
             return redirect()->route('partidas-nueva');
         }
@@ -52,25 +61,31 @@ class PartidaController extends Controller
         $clasifGnralInst = new ClasificadorGnralInstituto();
 
         $clasifGnralInst->id_instituto = Auth()->user()->id_instituto;
+
         $clasifGnralInst->id_clasificadorGnral = $request->clasificador;
-        $clasifGnralInst->monto_original = $this->_convertir($request->monto_original);
+
+        $clasifGnralInst->monto_original = MisHelpers::_MonedaMySQL($request->monto_original);
+
         $clasifGnralInst->ano_presupuesto = date('Y-m-d');
+
         $clasifGnralInst->fecha_creacion = date('Y-m-d');
 
-        if($instituto->final == 'S') {
+        if ($instituto->final == 'S') {
             $clasifGnralInst->partida_alterna = 'S';
         }
 
         $clasifGnralInst->id_tipoGasto = $request->tipo_gasto;
+
         $clasifGnralInst->id_origenFondos = $request->origen_fondos;
 
-        if($clasifGnralInst->save()){
+        if ($clasifGnralInst->save()){
             flash('Partida creada exitosamente','success');
             return redirect()->route('partidas-nueva');
         }
     }
 
-    public function verTodas(){
+    public function verTodas()
+    {
         $inst = auth()->user()->id_instituto;
 
         $instituto = Inst::find($inst);
@@ -83,8 +98,8 @@ class PartidaController extends Controller
             ->where('clasificadorGnral_instituto.id_instituto','=',$inst)
             ->select('clasificadorGnral_instituto.id',
                     'clasificador_general.partida',
+                    'clasificador_general.denominacion',
                     'clasificadorGnral_instituto.monto_original',
-                    'clasificadorGnral_instituto.fecha_creacion',
                     'clasificadorGnral_instituto.partida_alterna',
                     'tipo_gasto.tipo_gasto',
                     'origen_fondos.nombre'
@@ -94,22 +109,29 @@ class PartidaController extends Controller
         return view('partidas.verTodas')->with('partidas',$partidas)->with('inst',$instituto);
     }
 
-    public function eliminar($id){
-
+    public function eliminar($id)
+    {
         $partida = ClasificadorGnralInstituto::find($id);
 
         $partida->delete();
 
         flash('Partida eliminada exitosamente','success');
+
         return redirect()->route('partidas-verTodas');
     }
 
-    public function editar($id){
+    public function editar($id)
+    {
         $id_instituto = Auth()->user()->id_instituto;
+
         $instituto = Inst::find($id_instituto);
+
         $clsfGnralInst = ClasificadorGnralInstituto::find($id);
+
         $clsfGnral = ClasifGrnal::find($clsfGnralInst->id_clasificadorGnral);
+
         $tGastos = TipoGasto::all();
+
         $oFondos = OrigenFondos::all();
 
         return view('partidas.editar')
@@ -120,24 +142,29 @@ class PartidaController extends Controller
             ->with('oFondos',$oFondos);
     }
 
-    public function editada(Request $request){
+    public function editada(Request $request)
+    {
         $partida = ClasificadorGnralInstituto::find($request->id_partida);
 
-        $partida->monto_original = $this->_convertir($request->monto_original);
+        $partida->monto_original = static::_convertir($request->monto_original);
+
         $partida->id_tipoGasto = $request->tipo_gasto;
+
         $partida->id_origenFondos = $request->origen_fondos;
 
         $partida->save();
 
         flash('Partida modificada exitosamente','success');
+
         return redirect()->route('partidas-ver');
     }
 
-    private function _convertir($num){
-
+    public static function _convertir($num)
+    {
         //Se debe descomentar el modulo Intl en php.ini para que funcione
         //formatea el monto original a formato entendido por MySQL
         $_parse = numfmt_create('es_ES',\NumberFormatter::DECIMAL);
+
         $_result = numfmt_parse($_parse,$num);
 
         return $_result;

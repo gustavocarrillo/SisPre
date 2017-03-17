@@ -69,7 +69,6 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function (){
         Route::get('partidas/eliminar/{id}','PartidaController@eliminar')->name('partidas-eliminar');
         Route::get('partidas/editar/{id}','PartidaController@editar')->name('partidas-editar');
         Route::post('partidas/editada','PartidaController@editada')->name('partidas-editada');
-
     });
 
     //rutas para origen de fondos
@@ -99,7 +98,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function (){
         Route::get('clasificador-general/editar/{id}','ClasificadorController@editar')->name('clasifGnral-editar');
         Route::post('clasificador-general/editar/{id}', 'ClasificadorController@editado')->name('clasifGnral-editado');
         Route::get('clasificador-general/eliminar/{id}', 'ClasificadorController@eliminar')->name('clasifGnral-eliminar');
-
+        Route::post('clasificador-general/denominacion', 'ClasificadorController@getDenominacion')->name('clasifGnral-denominacion');
     });
 
     //rutas para tipos de gastos
@@ -109,4 +108,15 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function (){
     Route::get('catalogo-modificaciones/editar/{id}','CatalogoModifController@editar')->name('catalogoModif-editar');
     Route::post('catalogo-modificaciones/editar/{id}','CatalogoModifController@editado')->name('catalogoModif-editado');
     Route::get('catalogo-modificaciones/eliminar/{id}','CatalogoModifController@eliminar')->name('catalogoModif-eliminar');
+
+    //rutas para compromisos
+    Route::get('compromisos/nuevo','CompromisosController@nuevo')->name('compromisos-nuevo');
+    Route::post('compromisos/guardado','CompromisosController@guardado')->name('compromisos-guardado');
+    Route::get('compromisos/ver/{id}','CompromisosController@ver')->name('compromisos-ver');
+    Route::get('compromisos/verTodos','CompromisosController@verTodos')->name('compromisos-verTodos');
+    Route::get('compromisos/editar/{id}','CompromisosController@editar')->name('compromisos-editar');
+    Route::post('compromisos/editar/{id}','CompromisosController@editado')->name('compromisos-editado');
+    Route::get('compromisos/eliminar/{id}','CompromisosController@eliminar')->name('compromisos-eliminar');
+    Route::post('compromisos/denominacion', 'CompromisosController@getDenominacion')->name('compromisos-denominacion');
+
 });

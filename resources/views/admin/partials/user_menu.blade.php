@@ -15,6 +15,9 @@
         <ul class="navigation">
             {{--<li><a href="#"><i class="icon-comment-discussion"></i> <span><span class="badge bg-teal-400 pull-right">58</span> Messages</span></a></li>--}}
             <li class="divider"></li>
+            @if(Auth::user()->tipo == 'administrador')
+                <li><a href="{{ route('user-registro') }}"><i class="icon-users"></i> <span>Crear Usuario</span></a></li>
+            @endif
             <li><a href="#"><i class="icon-cog5"></i> <span>Configurar cuenta</span></a></li>
             <li><a href="{{ route('user-logout') }}"><i class="icon-switch2"></i> <span>Salir</span></a></li>
         </ul>

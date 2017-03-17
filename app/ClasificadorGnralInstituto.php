@@ -10,22 +10,29 @@ class ClasificadorGnralInstituto extends Model
 
     protected $fillable = ['id_instituto','id_clasificadorGnral','monto_original','ano_presupuesto','fecha_creacion','partida_alterna','id_tipoGasto','id_origenFondos'];
 
-    public function clasificadorGnral(){
+    public function clasificadorGnral()
+    {
         return $this->belongsTo('App\ClasificadorGnral');
     }
 
-    public function instituto(){
+    public function instituto()
+    {
         return $this->belongsTo('App\Instituto');
     }
 
-    public function tipoGasto(){
+    public function tipoGasto()
+    {
         return $this->belongsTo('App\TipoGasto');
     }
 
-    public function origenFondos(){
+    public function origenFondos()
+    {
         return $this->belongsTo('App\OrigenFondos');
     }
 
-
+    public function movimientos()
+    {
+        return $this->hasMany('App\Movimiento');
+    }
 
 }
