@@ -65,8 +65,11 @@
                     <label class="col-lg-3 control-label">Tipo:</label>
                     <div class="col-lg-9">
                         <select name="tipo" class="form-control" placeholder="">
-                            <option value="servicio">SERVICIO</option>
-                            <option value="compra">COMPRA</option>
+
+                            @foreach($ops as $op)
+                                <option value="{{ $op->id }}">{{ strtoupper($op->nombre) }}</option>
+                            @endforeach
+
                         </select>
                     </div>
                 </div>
@@ -85,9 +88,11 @@
                     <div class="col-lg-9">
                         <select name="partida" id="partida" class="form-control" placeholder="" required>
                             <option value="" selected>Seleccione...</option>
+
                             @foreach($clasif as $clsf)
                                 <option value="{{ $clsf->id }}">{{ $clsf->partida }}</option>
                             @endforeach
+
                         </select>
                     </div>
                 </div>
@@ -95,6 +100,10 @@
                 <div class="form-group">
                     <div class="col-lg-12">
                         <label id="denominacion" class="alert-success"></label>
+                    </div>
+                    <div class="col-lg-12">
+                        <label id="Lsaldo" class="alert-success hide">Saldo:</label>
+                        <label id="saldo" class="alert-success"></label>
                     </div>
                 </div>
 
@@ -134,8 +143,10 @@
                datatype: 'JSON',
                data: { partida: $(this).val() }
            }).done(function (resp) {
-               den = resp.denominacion;
-               $('#denominacion').html(den.toUpperCase());
+               den = resp;
+               $('#denominacion').html(den.denominacion.toUpperCase());
+               $('#saldo').html(den.saldo);
+               $('#Lsaldo').removeClass('hide');
            })
         });
     </script>

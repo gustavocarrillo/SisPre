@@ -10,11 +10,8 @@ use App\ClasificadorGnralInstituto;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Compromiso;
-use App\Http\Controllers\PartidaController as Partida;
 use App\MisHelpers\MisHelpers;
-use App\ClasificadorGnralInstituto as CGI;
 use App\Http\Controllers\ClasificadorController as CGC;
-use App\Movimiento as Movi;
 use App\Http\Controllers\MovimientosController as MoviC;
 use App\CatalogoOperacion as Op;
 
@@ -54,9 +51,7 @@ class CompromisosController extends Controller
 
         $compromiso->save();
 
-
-
-        MoviC::crearMovimiento($request->partida,$request->monto,$this,false);
+        MoviC::crearMovimiento($request->partida,$request->monto,$request->tipo,false);
 
         return redirect()->route('compromisos-verTodos');
     }

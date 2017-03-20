@@ -9,8 +9,11 @@
 @endsection
 
 @section('contenido')
+
     <div class="col-lg-9">
+
         @include('flash::message')
+
         <div class="panel panel-flat">
         <div class="panel-heading">
             <h5 class="panel-title">Compromisos <strong>{{ \App\MisHelpers\MisHelpers::_Instituto() }}</strong></h5>
@@ -28,27 +31,30 @@
                 </tr>
             </thead>
             <tbody>
+
             @foreach($compromisos as $cp)
-            <tr @if($cp->anulada == 's') style="color: red; font-weight: 500" @endif>
-                <td>{{ $cp->numero }}</td>
-                <td>{{ strtoupper($cp->tipo) }}</td>
-                <td>{{ strtoupper($cp->monto) }}</td>
-                <td>{{ strtoupper(date('d-m-Y',strtotime($cp->fecha))) }}</td>
-                <td>{{ $cp->partida}}</td>
-                <td class="text-center">
-                    <ul class="icons-list">
-                        <li class="text-green-600"><a href="{{ route('compromisos-ver',$cp->id) }}"><i class="icon-file-eye2"></i></a></li>
-                        <li class="text-primary-600"><a href="{{ route('compromisos-editar',$cp->id) }}"><i class="icon-pencil7"></i></a></li>
-                        <li class="text-danger-600"><a class="eliminar" id="{{ $cp->id }}"><i class="icon-trash"></i></a></li>
-                        {{--<li class="text-teal-600"><a href="#"><i class="icon-cog7"></i></a></li>--}}
-                    </ul>
-                </td>
-            </tr>
+                <tr @if($cp->anulada == 's') style="color: red; font-weight: 500" @endif>
+                    <td>{{ $cp->numero }}</td>
+                    <td>{{ strtoupper($cp->tipo) }}</td>
+                    <td>{{ strtoupper($cp->monto) }}</td>
+                    <td>{{ strtoupper(date('d-m-Y',strtotime($cp->fecha))) }}</td>
+                    <td>{{ $cp->partida}}</td>
+                    <td class="text-center">
+                        <ul class="icons-list">
+                            <li class="text-green-600"><a href="{{ route('compromisos-ver',$cp->id) }}"><i class="icon-file-eye2"></i></a></li>
+                            <li class="text-primary-600"><a href="{{ route('compromisos-editar',$cp->id) }}"><i class="icon-pencil7"></i></a></li>
+                            <li class="text-danger-600"><a class="eliminar" id="{{ $cp->id }}"><i class="icon-trash"></i></a></li>
+                            {{--<li class="text-teal-600"><a href="#"><i class="icon-cog7"></i></a></li>--}}
+                        </ul>
+                    </td>
+                </tr>
             @endforeach
+
             </tbody>
         </table>
     </div>
     </div>
+
 @endsection
 
 @section('js_pie')

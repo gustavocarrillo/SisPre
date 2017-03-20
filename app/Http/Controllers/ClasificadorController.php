@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\ClasificadorGnralInstituto as CGI;
 use App\ClasificadorGnral as CG;
 use App\Movimiento as Movi;
+use App\MisHelpers\MisHelpers;
 
 class ClasificadorController extends Controller
 {
@@ -89,6 +90,8 @@ class ClasificadorController extends Controller
         $cg = CG::find($cgi->id_clasificadorGnral);
 
         $saldo = static::_saldo($cgi);
+
+        $saldo = MisHelpers::_Moneda($saldo);
 
         return response()->json(['denominacion' => $cg->denominacion,'saldo' => $saldo]);
     }
